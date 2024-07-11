@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import MainLayout from './layouts/MainLayout.vue';
+import MainLayout from '@/layouts/MainLayout.vue';
 
 export default {
   name: 'App',
@@ -14,12 +14,3 @@ export default {
   }
 };
 </script>
-
-<style>
-@import 'bootstrap/dist/css/bootstrap.css';
-@import '@fortawesome/fontawesome-free/css/all.css';
-
-body {
-  font-family: 'Nunito', sans-serif;
-}
-</style>

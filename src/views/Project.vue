@@ -1,39 +1,41 @@
 <template>
-    <div class="project container">
-      <h1>{{ project.name }}</h1>
-      <Board />
+    <div class="projects container">
+      <h1>Proyectos</h1>
+      <ul class="list-group">
+        <li class="list-group-item" v-for="project in projects" :key="project.id">
+          <router-link :to="`/project/${project.id}`">{{ project.name }}</router-link>
+        </li>
+      </ul>
+      <button class="btn btn-primary mt-3" @click="createProject">Crear Nuevo Proyecto</button>
     </div>
   </template>
   
   <script>
-  import { mapActions } from 'vuex';
-  import Board from '@/components/Board.vue';
+  import { mapGetters, mapActions } from 'vuex';
   
   export default {
-    components: {
-      Board
-    },
-    data() {
-      return {
-        project: {}
-      };
+    computed: {
+      ...mapGetters(['projects'])
     },
     methods: {
-      ...mapActions(['fetchTasks']),
-      async loadProject() {
-        const projectId = this.$route.params.id;
-        this.project = { id: projectId, name: `Proyecto ${projectId}` };
-        await this.fetchTasks(projectId);
+      ...mapActions(['addProject']),
+      async createProject() {
+        try {
+          const project = {
+            name: 'Nuevo Proyecto',
+            description: 'Descripción del nuevo proyecto'
+          };
+          await this.addProject(project);
+        } catch (error) {
+          console.error('Error al crear proyecto:', error);
+        }
       }
-    },
-    created() {
-      this.loadProject();
     }
   };
   </script>
   
   <style scoped>
-  .project {
+  .projects {
     padding: 20px;
   }
   </style>
